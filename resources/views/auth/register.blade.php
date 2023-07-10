@@ -30,11 +30,13 @@
                 <h4>Register</h4>
               </div>
               <div class="card-body">
+
                 <form method="POST">
+                  {{csrf_field()}}
                   <div class="row">
                     <div class="form-group col-6">
                       <label for="frist_name">First Name</label>
-                      <input id="frist_name" type="text" class="form-control" name="frist_name" autofocus>
+                      <input id="frist_name" type="text" class="form-control" name="first_name" autofocus>
                     </div>
                     <div class="form-group col-6">
                       <label for="last_name">Last Name</label>
