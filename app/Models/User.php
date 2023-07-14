@@ -17,10 +17,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
+    protected $guarded = [
+        'id',
     ];
 
     /**
@@ -42,4 +40,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    
+    
+    
+    public static function getSiswa() {
+    $return = self::select('users.*')
+    ->where('user_type', '=', 2);
+  //  ->where('is_deleted', '=', 0);
+   
+    $return = $return->orderBy('id', 'desc')
+    ->paginate(20);
+
+    return $return;
+  }
 }

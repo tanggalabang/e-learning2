@@ -8,6 +8,7 @@
   <title>Otika - Admin Dashboard Template</title>
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{url('')}}/assets/css/app.min.css">
+  @yield('style')
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{url('')}}/assets/css/style.css">
   <link rel="stylesheet" href="{{url('')}}/assets/css/components.css">
@@ -17,7 +18,6 @@
 </head>
 
 <body>
-<div class="loader"></div>
 <div id="app">
 <div class="main-wrapper main-wrapper-1">
 @include('layouts.header')
@@ -31,13 +31,16 @@
 <!-- General JS Scripts -->
 <script src="{{url('')}}/assets/js/app.min.js"></script>
 <!-- JS Libraies -->
+<script src="{{url('')}}/assets/bundles/sweetalert/sweetalert.min.js"></script>
 <script src="{{url('')}}/assets/bundles/apexcharts/apexcharts.min.js"></script>
 <!-- Page Specific JS File -->
+@yield('script')
 <script src="{{url('')}}/assets/js/page/index.js"></script>
 <!-- Template JS File -->
 <script src="{{url('')}}/assets/js/scripts.js"></script>
 <!-- Custom JS File -->
 <script src="{{url('')}}/assets/js/custom.js"></script>
+@include('_message')
 </body>
 
 <!-- index.html  21 Nov 2019 03:47:04 GMT -->

@@ -164,14 +164,27 @@
   
   @if(Auth::user()->user_type == 1)
   <ul class="sidebar-menu">
-    <li class="menu-header">New</li>
     <li class="dropdown active">
       <a href="{{url('admin/dashboard')}}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
     </li>
+    <li class="menu-header">MAIN</li>
+        <li class="dropdown">
+      <a href="#" class="menu-toggle nav-link has-dropdown"><i
+        data-feather="briefcase"></i><span>USER</span></a>
+      <ul class="dropdown-menu">
+        <li><a class="nav-link" href="{{url('admin/siswa')}}">Siswa</a></li>
+        <li><a class="nav-link" href="widget-data.html">Data Widgets</a></li>
+      </ul>
+    </li>
+    <li class="menu-header">New</li>
     <li class="dropdown active">
       <a href="{{url('logout')}}" class="nav-link"><i data-feather="monitor"></i><span>Logout</span></a>
     </li>
-
+<br>
+<br>
+<br>
+<br>
+<br>
     <li class="menu-header">Main</li>
     <li class="dropdown active">
       <a href="index.html" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
@@ -375,10 +388,11 @@
 
   @if(Auth::user()->user_type == 2)
   <ul class="sidebar-menu">
-    <li class="menu-header">New</li>
     <li class="dropdown active">
       <a href="{{url('admin/dashboard')}}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
     </li>
+    <li class="menu-header">USER</li>
+    <li class="menu-header">PERSONAL</li>
     <li class="dropdown active">
       <a href="{{url('logout')}}" class="nav-link"><i data-feather="monitor"></i><span>Logout</span></a>
     </li>

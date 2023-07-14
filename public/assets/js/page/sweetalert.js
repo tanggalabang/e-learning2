@@ -1,61 +1,67 @@
-"use strict";
+function contoh() {
+  swal({
+    title: "Berhasil!",
+    text: "Pop-up berhasil ditampilkan",
+    icon: "success",
+    button: true,
+  });
+}
+
+("use strict");
 
 $("#swal-1").click(function () {
-  swal('Hello');
+  swal("Hello");
 });
 
 $("#swal-2").click(function () {
-  swal('Good Job', 'You clicked the button!', 'success');
+  swal("Good Job", "You clicked the button!", "success");
 });
 
 $("#swal-3").click(function () {
-  swal('Good Job', 'You clicked the button!', 'warning');
+  swal("Good Job", "You clicked the button!", "warning");
 });
 
 $("#swal-4").click(function () {
-  swal('Good Job', 'You clicked the button!', 'info');
+  swal("Good Job", "You clicked the button!", "info");
 });
 
 $("#swal-5").click(function () {
-  swal('Good Job', 'You clicked the button!', 'error');
+  swal("Good Job", "You clicked the button!", "error");
 });
 
-$("#swal-6").click(function () {
+
+$(".swal-6").click(function () {
   swal({
-    title: 'Are you sure?',
-    text: 'Once deleted, you will not be able to recover this imaginary file!',
-    icon: 'warning',
+    title: "Are you sure?",
+    text: "Once deleted, you will not be able to recover this imaginary file!",
+    icon: "warning",
     buttons: true,
     dangerMode: true,
-  })
-    .then((willDelete) => {
-      if (willDelete) {
-        swal('Poof! Your imaginary file has been deleted!', {
-          icon: 'success',
-        });
-      } else {
-        swal('Your imaginary file is safe!');
-      }
-    });
+  }).then((willDelete) => {
+    if (willDelete) {
+    } else {
+      swal("Your imaginary file is safe!");
+    }
+  });
 });
 
 $("#swal-7").click(function () {
   swal({
-    title: 'What is your name?',
+    title: "What is your name?",
     content: {
-      element: 'input',
+      element: "input",
       attributes: {
-        placeholder: 'Type your name',
-        type: 'text',
+        placeholder: "Type your name",
+        type: "text",
       },
     },
   }).then((data) => {
-    swal('Hello, ' + data + '!');
+    swal("Hello, " + data + "!");
   });
 });
 
 $("#swal-8").click(function () {
-  swal('This modal will disappear soon!', {
+  swal("This modal will disappear soon!", {
     buttons: false,
     timer: 3000,
   });
