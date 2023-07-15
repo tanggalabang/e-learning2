@@ -161,14 +161,14 @@
         class="logo-name">Otika</span>
     </a>
   </div>
-  
+
   @if(Auth::user()->user_type == 1)
   <ul class="sidebar-menu">
     <li class="dropdown active">
       <a href="{{url('admin/dashboard')}}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
     </li>
     <li class="menu-header">MAIN</li>
-        <li class="dropdown">
+    <li class="dropdown">
       <a href="#" class="menu-toggle nav-link has-dropdown"><i
         data-feather="briefcase"></i><span>USER</span></a>
       <ul class="dropdown-menu">
@@ -176,15 +176,21 @@
         <li><a class="nav-link" href="widget-data.html">Data Widgets</a></li>
       </ul>
     </li>
+    <li class="dropdown">
+      <a href="{{url('logout')}}" class="nav-link"><i data-feather="monitor"></i><span>KELAS</span></a>
+    </li>
+    <li class="dropdown">
+      <a href="{{url('logout')}}" class="nav-link"><i data-feather="monitor"></i><span>MAPEL</span></a>
+    </li>
     <li class="menu-header">New</li>
-    <li class="dropdown active">
+    <li class="dropdown">
       <a href="{{url('logout')}}" class="nav-link"><i data-feather="monitor"></i><span>Logout</span></a>
     </li>
-<br>
-<br>
-<br>
-<br>
-<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <li class="menu-header">Main</li>
     <li class="dropdown active">
       <a href="index.html" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
