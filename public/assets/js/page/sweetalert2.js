@@ -1,26 +1,23 @@
-function showConfirmation(event, userId) {
-  event.preventDefault(); // Mencegah form dikirimkan secara langsung no
+window.addEventListener("swal:modal", (event) => {
   swal({
-    title: "Are you h?",
-    text: "Once deleted, you will not be able to recover this imaginary file!",
-    icon: "warning",
+    title: event.detail.title,
+    text: event.detail.text,
+    icon: event.detail.type,
+    
+  });
+});
+
+window.addEventListener("swal:confirm", (event) => {
+  swal({
+    title: event.detail.title,
+    text: event.detail.text,
+    icon: event.detail.type,
     buttons: true,
     dangerMode: true,
+    
   }).then((willDelete) => {
     if (willDelete) {
-      // Submit form
-      document.getElementById("deleteForm-" + userId).submit(); // Mengirimkan form jika pengguna menekan tombol 'OK'
-      // Lanjutkan dengan penghapusan
+      Livewire.emit("deleteConfirmed");
     }
   });
-}
-
-@if(session('success'))
-<script>
-  swal({
-    title: 'Sukses',
-    text: '{{ session('success') }}',
-    icon: 'success',
-  });
-</script>
-@endif
+});

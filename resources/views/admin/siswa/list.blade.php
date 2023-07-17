@@ -17,7 +17,6 @@
             </div>
             <div class="card-body">
               <div class="buttons mb-3">
-
                 <button type="button" class="btn btn-icon icon-left btn-primary " data-toggle="modal"
                   data-target=".bd-example-modal-lg">
                   <i class="far fa-edit"></i>
@@ -28,9 +27,9 @@
                   <i class="far fa-edit"></i>
                   Import Excel
                 </button>
-
                 <a href="{{url('admin/siswa/excel')}}" class="btn btn-icon icon-left btn-warning"><i class="fas fa-exclamation-triangle"></i> Export Excel</a>
               </div>
+              
               <div class="table-responsive">
 
                 <table class="table table-striped table-hover" id="save-stage" style="width:100%;">
@@ -105,9 +104,9 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr
                 <td>
-                  <input name="nis[]" type="text" class="form-control">
+                  <input wire:model="body" name="nis[]" type="text" class="form-control">
                 </td>
                 <td>
                   <input name="nama[]" type="text" class="form-control">
@@ -186,7 +185,6 @@
   </div>
 </div>
 <!-- End Small Modal -->
-
 @endsection
 @section('script')
 <!-- JS Libraies -->
@@ -194,51 +192,5 @@
 <script src="{{url('')}}/assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script src="{{url('')}}/assets/bundles/jquery-ui/jquery-ui.min.js"></script>
 <!-- Page Specific JS File -->
-<script type="text/javascript" src="{{url('')}}/assets/js/page/sweetalert2.js"></script>
 <script src="{{url('')}}/assets/js/page/datatables.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-  const table = document.getElementById("dataTable");
-
-  table.addEventListener("click", function(event) {
-  if (event.target.classList.contains("btn-delete-row")) {
-  event.target.closest("tr").remove();
-  }
-  });
-
-  document.getElementById("btnTambahBaris").addEventListener("click", function() {
-  const row = table.insertRow(table.rows.length);
-  row.innerHTML = `
-  <td>
-  <input type="text" name="nis[]" class="form-control">
-  </td>
-  <td>
-  <input type="text" name="nama[]" class="form-control">
-  </td>
-  <td>
-  <select name="gender[]" class="custom-select">
-  <option selected>Choose...</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-  </select>
-  </td>
-  <td>
-  <input type="text" name="email[]" class="form-control">
-  </td>
-  <td>
-  <select name="kelas[]" class="custom-select">
-  <option selected>Choose...</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-  </select>
-  </td>
-  <td>
-  <button type="button" class="btn btn-icon btn-danger btn-delete-row"><i class="fas fa-times"></i></button>
-  </td>
-  `;
-  });
-  });
-</script>
 @endsection
