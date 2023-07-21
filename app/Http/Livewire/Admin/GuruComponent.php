@@ -8,10 +8,11 @@ use phpDocumentor\Reflection\Types\This;
 use Livewire\WithPagination;
 
 
-class SiswaComponent extends Component
+class GuruComponent extends Component
 {
   use WithPagination;
   protected $paginationTheme = 'bootstrap';
+
 
   public
   $nis,
@@ -182,7 +183,7 @@ class SiswaComponent extends Component
 
 
   public function render() {
-    $query = User::query()->where('user_type', '=', 2);
+    $query = User::query()->where('user_type', '=', 3);
 ;
     $query->when($this->searchTerm != "", function($q) {
       return $q->orWhere('nis', 'like', '%'.$this->searchTerm.'%')

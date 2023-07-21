@@ -3,15 +3,18 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\User;
+use App\Models\Kelas;
+use App\Models\Mapel;
 use Livewire\Component;
 use phpDocumentor\Reflection\Types\This;
 use Livewire\WithPagination;
 
 
-class SiswaComponent extends Component
+class RelasiComponent extends Component
 {
   use WithPagination;
   protected $paginationTheme = 'bootstrap';
+
 
   public
   $nis,
@@ -19,8 +22,11 @@ class SiswaComponent extends Component
   $gender,
   $email,
   $kelas,
+  
   $student_edit_id,
   $student_delete_id;
+  
+  public $kelass = [];
 
   public $view_student_nis,
   $view_student_name,
@@ -95,26 +101,23 @@ class SiswaComponent extends Component
 
   public function editStudents($id) {
     $student = User::where('id', $id)->first();
-    $this->nis = $student->nis;
-    $this->nama = $student->name;
-    $this->gender = $student->gender;
-    $this->email = $student->email;
-    $this->kelas = $student->kelas;
+    $this->kelass = $student->kelass;
+    
 
     $this->dispatchBrowserEvent('show-edit-student-modal');
   }
 
   public function editStudentData() {
     //on form submit validation
-    $this->validate([
-      //'student_id' => 'required|unique:students,student_id,'.$this->student_edit_id.'', //Validation with ignoring own data
-      'nis' => 'required|unique:users,nis,'.$this->student_edit_id.'', //Validation with ignoring own data
-      'nama' => 'required',
-      'gender' => 'required',
-      'email' => 'required|email',
-      'kelas' => 'required',
-    ]);
-
+//     $this->validate([
+//       //'student_id' => 'required|unique:students,student_id,'.$this->student_edit_id.'', //Validation with ignoring own data
+//       'nis' => 'required|unique:users,nis,'.$this->student_edit_id.'', //Validation with ignoring own data
+//       'nama' => 'required',
+//       'gender' => 'required',
+//       'email' => 'required|email',
+//       'kelas' => 'required',
+//     ]);
+ dd($this->kelass);
     $student = User::where('id', $this->student_edit_id)->first();
     $student->nis = $this->nis;
     $student->name = $this->nama;
@@ -180,10 +183,50 @@ class SiswaComponent extends Component
     $this->view_student_kelas = '';
   }
 
+  public $selectedCheckboxes = [];
+  public $selectedCheckboxes2 = [];
+
+  public function updatedSelectedCheckboxes($id) {
+        $student = User::where('id', $id)->first();
+dd($student);
+    
+    dd($this->selectedCheckboxes);
+
+  }
+  public function updatedSelectedCheckboxes2($value) {
+    dd($this->selectedCheckboxes2);
+    foreach ($selectedCheckboxes2 as $subject_id) {
+      //                 $getAlreadyFirst = ClassSubjectModel::getAlreadyFirst($request->class_id, $subject_id);
+      //                 if (! empty($getAlreadyFirst)) {
+      //                     $getAlreadyFirst->status = $request->status;
+      //                     $getAlreadyFirst->save();
+      //                 //dd($request->subject_id);
+      //                 } else {
+      $save = new Relasi;
+      $save->kelas_id = $request->class_id;
+      $save->subject_id = $subject_id;
+      $save->status = $request->status;
+      $save->created_by = Auth::user()->id;
+      $save->save();
+      //  }
+    }
+
+
+  }
+
 
   public function render() {
-    $query = User::query()->where('user_type', '=', 2);
-;
+    $query1 = User::query()->where('user_type', '=', 3);
+    $query = Kelas::query();
+    $query2 = Mapel::query();
+
+    // $query->when($this->searchColumnsCategoryId != "", function($q) {
+    //   return $q->where('id', $this->searchColumnsCategoryId);
+    // });
+    // $query->when($this->searchColumnsCategoryId != "", function($q) {
+    //   return $q->where('id', $this->searchColumnsCategoryId);
+    // });
+
     $query->when($this->searchTerm != "", function($q) {
       return $q->orWhere('nis', 'like', '%'.$this->searchTerm.'%')
       ->orWhere('name', 'like', '%'.$this->searchTerm.'%')
@@ -195,8 +238,10 @@ class SiswaComponent extends Component
       return $q->where('id', $this->searchColumnsCategoryId);
     });
 
-    $siswas = $query->latest()->paginate(20);;
+    $siswas = $query1->latest()->paginate(20);
+    $halo = $query->latest()->get();
+    $mapels = $query2->latest()->get();
 
-    return view('livewire.admin.siswa-component', compact('siswas'));
+    return view('livewire.admin.relasi-component', compact('siswas', 'halo', 'mapels'));
   }
 }

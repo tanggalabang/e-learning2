@@ -173,17 +173,17 @@
         data-feather="briefcase"></i><span>USER</span></a>
       <ul class="dropdown-menu">
         <li><a class="nav-link" href="{{url('admin/siswa')}}">Siswa</a></li>
-        <li><a class="nav-link" href="widget-data.html">Guru</a></li>
+        <li><a class="nav-link" href="{{url('admin/guru')}}">Guru</a></li>
       </ul>
     </li>
     <li class="dropdown">
-      <a href="{{url('logout')}}" class="nav-link"><i data-feather="monitor"></i><span>KELAS</span></a>
+      <a href="{{url('admin/kelas')}}" class="nav-link"><i data-feather="monitor"></i><span>KELAS</span></a>
     </li>
     <li class="dropdown">
-      <a href="{{url('logout')}}" class="nav-link"><i data-feather="monitor"></i><span>MAPEL</span></a>
+      <a href="{{url('admin/mapel')}}" class="nav-link"><i data-feather="monitor"></i><span>MAPEL</span></a>
     </li>
     <li class="dropdown">
-      <a href="{{url('logout')}}" class="nav-link"><i data-feather="monitor"></i><span>RELASI</span></a>
+      <a href="{{url('admin/relasi')}}" class="nav-link"><i data-feather="monitor"></i><span>RELASI</span></a>
     </li>
     <li class="menu-header">New</li>
     <li class="dropdown">
