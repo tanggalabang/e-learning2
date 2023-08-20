@@ -203,3 +203,4 @@ class KelasComponent extends Component
     return view('livewire.admin.kelas-component', compact('siswas'));
   }
 }
+
