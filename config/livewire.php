@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'asset_url' => 'http://localhost:8080/experiment/e-learning/public',
+    'asset_url' => null,
 
     /*
     |--------------------------------------------------------------------------

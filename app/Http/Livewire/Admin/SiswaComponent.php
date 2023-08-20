@@ -13,29 +13,34 @@ class SiswaComponent extends Component
   use WithPagination;
   protected $paginationTheme = 'bootstrap';
 
+
+  public $nis = [];
+  
   public
-  $nis,
-  $nama,
-  $gender,
-  $email,
-  $kelas,
-  $student_edit_id,
-  $student_delete_id;
+
+    $nama,
+    $gender,
+    $email,
+    $kelas,
+    $student_edit_id,
+    $student_delete_id;
 
   public $view_student_nis,
-  $view_student_name,
-  $view_student_gender,
-  $view_student_email,
-  $view_student_kelas;
+    $view_student_name,
+    $view_student_gender,
+    $view_student_email,
+    $view_student_kelas;
 
 
   public $searchTerm,
-  $searchColumnsCategoryId;
+    $searchColumnsCategoryId;
+
 
   //live validasi
-  public function updated($fields) {
+  public function updated($fields)
+  {
     $this->validateOnly($fields, [
-      'nis' => 'required|unique:users,nis,'.$this->student_edit_id.'', //Validation with ignoring own data
+      'nis' => 'required|unique:users,nis,' . $this->student_edit_id . '', //Validation with ignoring own data
       'nama' => 'required',
       'gender' => 'required',
       'email' => 'required|email',
@@ -43,10 +48,14 @@ class SiswaComponent extends Component
     ]);
   }
 
-  public function storeStudentData() {
+
+  public function storeStudentData()
+  {
+    
+  
     //on form submit validation
     $this->validate([
-      'nis' => 'required|unique:users,nis,'.$this->student_edit_id.'', //Validation with ignoring own data
+      'nis' => 'required|unique:users,nis,' . $this->student_edit_id . '', //Validation with ignoring own data
       'nama' => 'required',
       'gender' => 'required',
       'email' => 'required|email',
@@ -78,10 +87,10 @@ class SiswaComponent extends Component
 
     //For hide modal after add student success
     $this->dispatchBrowserEvent('close-modal');
-
   }
 
-  public function resetInputs() {
+  public function resetInputs()
+  {
     $this->nis = '';
     $this->nama = '';
     $this->gender = '';
@@ -89,11 +98,13 @@ class SiswaComponent extends Component
     $this->kelas = '';
   }
 
-  public function close() {
+  public function close()
+  {
     $this->resetInputs();
   }
 
-  public function editStudents($id) {
+  public function editStudents($id)
+  {
     $student = User::where('id', $id)->first();
     $this->nis = $student->nis;
     $this->nama = $student->name;
@@ -104,11 +115,12 @@ class SiswaComponent extends Component
     $this->dispatchBrowserEvent('show-edit-student-modal');
   }
 
-  public function editStudentData() {
+  public function editStudentData()
+  {
     //on form submit validation
     $this->validate([
       //'student_id' => 'required|unique:students,student_id,'.$this->student_edit_id.'', //Validation with ignoring own data
-      'nis' => 'required|unique:users,nis,'.$this->student_edit_id.'', //Validation with ignoring own data
+      'nis' => 'required|unique:users,nis,' . $this->student_edit_id . '', //Validation with ignoring own data
       'nama' => 'required',
       'gender' => 'required',
       'email' => 'required|email',
@@ -136,7 +148,8 @@ class SiswaComponent extends Component
 
   protected $listeners = ['deleteConfirmed' => 'deleteStudentData'];
   //Delete Confirmation
-  public function deleteConfirmation($id) {
+  public function deleteConfirmation($id)
+  {
     $this->student_delete_id = $id; //student id
 
     $this->dispatchBrowserEvent('swal:confirm', [
@@ -146,7 +159,8 @@ class SiswaComponent extends Component
     ]);
   }
 
-  public function deleteStudentData() {
+  public function deleteStudentData()
+  {
     $student = User::where('id', $this->student_delete_id)->first();
     $student->delete();
 
@@ -160,7 +174,8 @@ class SiswaComponent extends Component
     $this->student_delete_id = '';
   }
 
-  public function viewStudentDetails($id) {
+  public function viewStudentDetails($id)
+  {
     $student = User::where('id', $id)->first();
 
     $this->view_student_nis = $student->nis;
@@ -172,7 +187,8 @@ class SiswaComponent extends Component
     $this->dispatchBrowserEvent('show-view-student-modal');
   }
 
-  public function closeViewStudentModal() {
+  public function closeViewStudentModal()
+  {
     $this->view_student_nis = '';
     $this->view_student_name = '';
     $this->view_student_nis = '';
@@ -181,17 +197,17 @@ class SiswaComponent extends Component
   }
 
 
-  public function render() {
-    $query = User::query()->where('user_type', '=', 2);
-;
-    $query->when($this->searchTerm != "", function($q) {
-      return $q->orWhere('nis', 'like', '%'.$this->searchTerm.'%')
-      ->orWhere('name', 'like', '%'.$this->searchTerm.'%')
-      ->orWhere('gender', 'like', '%'.$this->searchTerm.'%')
-      ->orWhere('email', 'like', '%'.$this->searchTerm.'%')
-      ->orWhere('kelas', 'like', '%'.$this->searchTerm.'%');
+  public function render()
+  {
+    $query = User::query()->where('user_type', '=', 2);;
+    $query->when($this->searchTerm != "", function ($q) {
+      return $q->orWhere('nis', 'like', '%' . $this->searchTerm . '%')
+        ->orWhere('name', 'like', '%' . $this->searchTerm . '%')
+        ->orWhere('gender', 'like', '%' . $this->searchTerm . '%')
+        ->orWhere('email', 'like', '%' . $this->searchTerm . '%')
+        ->orWhere('kelas', 'like', '%' . $this->searchTerm . '%');
     });
-    $query->when($this->searchColumnsCategoryId != "", function($q) {
+    $query->when($this->searchColumnsCategoryId != "", function ($q) {
       return $q->where('id', $this->searchColumnsCategoryId);
     });
 

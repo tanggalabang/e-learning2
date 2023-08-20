@@ -30,9 +30,13 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'admin'], function () {
   Route::get('/admin/dashboard', [DashboardController::class, 'dashboard']);
-  Route::get('/admin/siswa', function () {
-    return view('admin.siswa.siswa');
-  });
+  Route::get('/admin/siswa', [SiswaController::class, 'list']);
+  Route::post('/admin/siswa', [SiswaController::class, 'create'])->name('siswa-create');
+
+
+  // Route::get('/admin/siswa', function () {
+  //   return view('admin.siswa.siswa');
+  // });
   Route::get('/admin/guru', function () {
     return view('admin.siswa.guru');
   });
@@ -48,7 +52,7 @@ Route::group(['middleware' => 'admin'], function () {
   
   Route::get('/admin/relasi-edit/{id}', [RelasiEditComponent::class, 'relasi_edit']);
 
-  // Route::post('/admin/siswa', [SiswaController::class, 'create']);
+//  Route::post('/admin/siswa', [SiswaController::class, 'create']);
 //   Route::put('/admin/siswa/{id}', [SiswaController::class, 'update']);
 //   Route::delete('/admin/siswa/{id}', [SiswaController::class, 'delete']);
 //   Route::post('/admin/siswa/excel', [SiswaController::class, 'import']);
