@@ -169,20 +169,20 @@
                                 <tr>
                                     <td>
                                         <div style="margin-bottom: 0 !important" class="form-group"
-                                            wire:model="nis[]">
-                                            <input type="text" class="form-control">
+                                            >
+                                            <input type="text" class="form-control" wire:model="nis[]">
                                         </div>
                                     </td>
                                     <td>
                                         <div style="margin-bottom: 0 !important" class="form-group"
-                                            wire:model="nama[]">
-                                            <input type="text" class="form-control">
+                                            >
+                                            <input type="text" class="form-control" wire:model="nama[]">
                                         </div>
                                     </td>
                                     <td>
                                         <div style="margin-bottom: 0 !important" class="form-group"
-                                            wire:model="gender[]">
-                                            <select class="form-control">
+                                            >
+                                            <select class="form-control" wire:model="gender[]">
                                                 <option>Option 1</option>
                                                 <option>Option 2</option>
                                                 <option>Option 3</option>
@@ -191,14 +191,14 @@
                                     </td>
                                     <td>
                                         <div style="margin-bottom: 0 !important" class="form-group"
-                                            wire:model="email[]">
-                                            <input type="text" class="form-control">
+                                            >
+                                            <input type="text" class="form-control" wire:model="email[]">
                                         </div>
                                     </td>
                                     <td>
                                         <div style="margin-bottom: 0 !important" class="form-group"
-                                            wire:model="kelas[]">
-                                            <select class="form-control">
+                                            >
+                                            <select class="form-control" wire:model="kelas[]">
                                                 <option>Option 1</option>
                                                 <option>Option 2</option>
                                                 <option>Option 3</option>
@@ -384,7 +384,7 @@
             </div>
         </div>
     </div>
-    
+
     <div wire:ignore.self class="modal fade" id="viewStudentModal" tabindex="-1" data-backdrop="static"
         data-keyboard="false" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog" role="document">

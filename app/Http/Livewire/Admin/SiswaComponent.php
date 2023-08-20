@@ -14,7 +14,6 @@ class SiswaComponent extends Component
   protected $paginationTheme = 'bootstrap';
 
 
-  public $nis = [];
   
   public
 
@@ -36,22 +35,23 @@ class SiswaComponent extends Component
     $searchColumnsCategoryId;
 
 
-  //live validasi
-  public function updated($fields)
-  {
-    $this->validateOnly($fields, [
-      'nis' => 'required|unique:users,nis,' . $this->student_edit_id . '', //Validation with ignoring own data
-      'nama' => 'required',
-      'gender' => 'required',
-      'email' => 'required|email',
-      'kelas' => 'required',
-    ]);
-  }
+  // //live validasi
+  // public function updated($fields)
+  // {
+  //   $this->validateOnly($fields, [
+  //     'nis' => 'required|unique:users,nis,' . $this->student_edit_id . '', //Validation with ignoring own data
+  //     'nama' => 'required',
+  //     'gender' => 'required',
+  //     'email' => 'required|email',
+  //     'kelas' => 'required',
+  //   ]);
+  // }
 
+  public $nis = [];
 
   public function storeStudentData()
   {
-    
+    dd($this->nis[]);
   
     //on form submit validation
     $this->validate([
