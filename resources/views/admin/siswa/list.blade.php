@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@push('style')
+    <link rel="stylesheet" href="{{url('')}}/assets/bundles/datatables/datatables.min.css">
+    <link rel="stylesheet" href="{{url('')}}/assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
+@endpush
+
 @section('main')
     <div>
         <div class="main-content">
@@ -29,79 +34,57 @@
                                             Export Excel</a>
                                     </div>
 
-                                    <div class="row mb-3">
-                                        <div class="col-8">
-                                            <!-- resources/views/products/search.blade.php -->
-
-                                            <form action="" method="GET">
-                                                <label for="category_id">Search Category:</label>
-                                                <select name="category_id">
-                                                    <option value="">Select a category</option>
-                                                    @foreach ($getRecord as $value)
-                                                        <option value="{{ $value->id }}">{{ $value->kelas }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <button type="submit">Search</button>
-                                            </form>
-
-
-
-                                        </div>
-                                        <div class="col-4">
-                                            <input type="search" class="form-control" placeholder="Cari Data..."
-                                                wire:model="searchTerm" />
-                                        </div>
-                                    </div>
-
-                                    <table class="table table-striped table-hover" style="width:100%;">
-                                        <thead>
-                                            <tr>
-                                                <th>NIS</th>
-                                                <th>NAMA</th>
-                                                <th>GENDER</th>
-                                                <th>EMAIL</th>
-                                                <th>KELAS</th>
-                                                <th style="text-align: center;">AKSI</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if ($getRecord->count() > 0)
-                                                @foreach ($getRecord as $value)
-                                                    <tr>
-                                                        <td>{{ $value->nis }}</td>
-                                                        <td>{{ $value->name }}</td>
-                                                        <td>{{ $value->gender }}</td>
-                                                        <td>{{ $value->email }}</td>
-                                                        <td>{{ $value->kelas }}</td>
-                                                        <td style="text-align: center;">
-
-                                                            <button class="btn btn-sm btn-secondary" data-toggle="modal"
-                                                                data-target="#viewStudentModal{{ $value->id }}">Lihat</button>
-                                                            <button class="btn btn-sm btn-primary" data-toggle="modal"
-                                                                data-target="#editStudentModal{{ $value->id }}">
-                                                                Edit
-                                                            </button>
-                                                            <form action="{{ url('admin/siswa', $value->id) }}"
-                                                                method="post" style="display: inline">
-                                                                @csrf
-                                                                @method('delete')
-                                                                <button type="submit"
-                                                                    class="btn btn-sm btn-danger">Hapus</button>
-                                                            </form>
-
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @else
+                                    
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" id="table-1">
+                                            <thead>
                                                 <tr>
-                                                    <td colspan="4" style="text-align: center;"><small>No Student
-                                                            Found</small></td>
+                                                    <th>NIS</th>
+                                                    <th>NAMA</th>
+                                                    <th>GENDER</th>
+                                                    <th>EMAIL</th>
+                                                    <th>KELAS</th>
+                                                    <th style="text-align: center;">AKSI</th>
                                                 </tr>
-                                            @endif
-                                        </tbody>
+                                            </thead>
+                                            <tbody>
+                                                @if ($getRecord->count() > 0)
+                                                    @foreach ($getRecord as $value)
+                                                        <tr>
+                                                            <td>{{ $value->nis }}</td>
+                                                            <td>{{ $value->name }}</td>
+                                                            <td>{{ $value->gender }}</td>
+                                                            <td>{{ $value->email }}</td>
+                                                            <td>{{ $value->kelas }}</td>
+                                                            <td style="text-align: center;">
 
-                                    </table>
+                                                                <button class="btn btn-sm btn-secondary" data-toggle="modal"
+                                                                    data-target="#viewStudentModal{{ $value->id }}">Lihat</button>
+                                                                <button class="btn btn-sm btn-primary" data-toggle="modal"
+                                                                    data-target="#editStudentModal{{ $value->id }}">
+                                                                    Edit
+                                                                </button>
+                                                                <form action="{{ url('admin/siswa', $value->id) }}"
+                                                                    method="post" style="display: inline">
+                                                                    @csrf
+                                                                    @method('delete')
+                                                                    <button type="submit"
+                                                                        class="btn btn-sm btn-danger">Hapus</button>
+                                                                </form>
 
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td colspan="4" style="text-align: center;"><small>No Student
+                                                                Found</small></td>
+                                                    </tr>
+                                                @endif
+                                            </tbody>
+
+                                        </table>
+                                    </div>
                                     <div style="float:right;">
                                         {{-- {{ $getRecord->links() }} --}}
                                     </div>
@@ -451,6 +434,10 @@
 @endsection
 
 @push('scripts')
+    <script src="{{url('')}}/assets/bundles/datatables/datatables.min.js"></script>
+    <script src="{{url('')}}/assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Page Specific JS File -->
+    <script src="{{url('')}}/assets/js/page/datatables.js"></script>
     <script>
         $('.modal-body').on('click', '.addRow', function() {
             var tr = "<tr>" +
