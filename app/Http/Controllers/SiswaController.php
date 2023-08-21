@@ -80,6 +80,8 @@ class SiswaController extends Controller
   }
 
 
+
+  //excel
   public function example()
   {
     $filename = 'example.xlsx';
@@ -100,16 +102,16 @@ class SiswaController extends Controller
     $import->import($file);
     return redirect('/admin/siswa')->with('success', 'Data berhasil di Import');
   }
-  // // 
-  //   public function export() {
-  //     return (new SiswaExport)->download('data_barang.xlsx');
-  //   }
-  // 
-  //   
+  
+    public function export() {
+      return (new SiswaExport)->download('data_barang.xlsx');
+    }
+  
+    
   //   public function delete($id) {
   //     $resource = User::findOrFail($id);
   //     $resource->delete();
-  // 
+  
   //     return redirect()->back()->with('success', 'Data berhasil dihapus');
   //  }
 

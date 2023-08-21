@@ -17,6 +17,7 @@ Route::get('/test/{$id}', [RelasiEditController::class, 'index']);
 
 Route::post('/admin/siswa/excel', [SiswaController::class, 'import']);
 Route::get('/admin/siswa/excel', [SiswaController::class, 'export']);
+Route::get('/admin/siswa/excel-example', [SiswaController::class, 'example']);
 
 Route::get('/login', [AuthController::class, 'login']);
 Route::post('/login', [AuthController::class, 'authLogin']);
