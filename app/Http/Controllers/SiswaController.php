@@ -16,7 +16,7 @@ class SiswaController extends Controller
   public function list()
   {
     $data['getRecord'] = User::getSiswa();
-    return view('admin.siswa.list', $data );
+    return view('admin.siswa.list', $data);
   }
 
 
@@ -54,27 +54,30 @@ class SiswaController extends Controller
     $kelasArray = $request->kelas;
 
     // Menggunakan perulangan untuk menyimpan data siswa
-    
-      $siswa = new User;
-      $siswa->nis = $nisArray;
-      $siswa->name = $namaArray;
-      $siswa->gender = $genderArray;
-      $siswa->email = $emailArray;
-      $siswa->kelas = $kelasArray;
-      $siswa->save();
-    
+
+    $siswa = new User;
+    $siswa->nis = $nisArray;
+    $siswa->name = $namaArray;
+    $siswa->gender = $genderArray;
+    $siswa->email = $emailArray;
+    $siswa->kelas = $kelasArray;
+    $siswa->save();
+
 
     // Redirect atau tambahkan logika lain setelah penyimpanan data
     return redirect()->back()->with('success', 'Data siswa berhasil disimpan');
   }
 
   public function delete($id)
-{
-    // Lakukan logika penghapusan data berdasarkan $id
-     User::find($id)->delete();
+  {
 
+    $getRecord = User::getSingle($id);
+    if (!empty($getRecord)) {
+      $getRecord->is_delete = 1;
+      $getRecord->save();
+    }
     return redirect()->back()->with('success', 'Data berhasil dihapus.');
-}
+  }
 
 
   public function example()

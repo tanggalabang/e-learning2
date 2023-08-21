@@ -31,13 +31,21 @@
 
                                     <div class="row mb-3">
                                         <div class="col-8">
-                                            <select wire:model="searchColumnsCategoryId" class="form-control w-25"
-                                                style="float: right;">
-                                                <option value="" selected>Kelas</option>
-                                                @foreach (App\Models\User::pluck('kelas', 'id') as $id => $kelas)
-                                                    <option value="{{ $id }}">{{ $kelas }}</option>
-                                                @endforeach
-                                            </select>
+                                            <!-- resources/views/products/search.blade.php -->
+
+                                            <form action="" method="GET">
+                                                <label for="category_id">Search Category:</label>
+                                                <select name="category_id">
+                                                    <option value="">Select a category</option>
+                                                    @foreach ($getRecord as $value)
+                                                        <option value="{{ $value->id }}">{{ $value->kelas }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <button type="submit">Search</button>
+                                            </form>
+
+
+
                                         </div>
                                         <div class="col-4">
                                             <input type="search" class="form-control" placeholder="Cari Data..."
@@ -73,12 +81,14 @@
                                                                 data-target="#editStudentModal{{ $value->id }}">
                                                                 Edit
                                                             </button>
-                                                            <form action="{{ url('admin/siswa', $value->id) }}" method="post" style="display: inline">
+                                                            <form action="{{ url('admin/siswa', $value->id) }}"
+                                                                method="post" style="display: inline">
                                                                 @csrf
                                                                 @method('delete')
-                                                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-sm btn-danger">Hapus</button>
                                                             </form>
-                                                            
+
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -411,23 +421,23 @@
                                 <tbody>
                                     <tr>
                                         <th>NIS: </th>
-                                        <td>{{$value->nis}}</td>
+                                        <td>{{ $value->nis }}</td>
                                     </tr>
                                     <tr>
                                         <th>NAMA: </th>
-                                        <td>{{$value->name}}</td>
+                                        <td>{{ $value->name }}</td>
                                     </tr>
                                     <tr>
                                         <th>GENDER: </th>
-                                        <td>{{$value->gender}}</td>
+                                        <td>{{ $value->gender }}</td>
                                     </tr>
                                     <tr>
                                         <th>EMAIL: </th>
-                                        <td>{{$value->email}}</td>
+                                        <td>{{ $value->email }}</td>
                                     </tr>
                                     <tr>
                                         <th>KELAS: </th>
-                                        <td>{{$value->kelas}}</td>
+                                        <td>{{ $value->kelas }}</td>
                                     </tr>
                                 </tbody>
                             </table>
