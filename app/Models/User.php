@@ -58,4 +58,15 @@ class User extends Authenticatable
 
     return $return;
   }
+  public static function getGuru()
+  {
+    $return = self::select('users.*')
+      ->where('user_type', '=', 1)
+      ->where('is_delete', '=', 0);
+
+    $return = $return->orderBy('id', 'desc')
+      ->paginate(20);
+
+    return $return;
+  }
 }

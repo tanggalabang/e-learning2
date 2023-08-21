@@ -18,7 +18,7 @@ class AdminMiddleware
     {
         if(!empty(Auth::check()))
         {
-            if(Auth::user()->user_type == 1)
+            if(Auth::user()->user_type == 0)
             {
                 return $next($request);
             }

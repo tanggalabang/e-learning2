@@ -11,7 +11,7 @@ class AuthController extends Controller
     public function login()
     {
         if (! empty(Auth::check())) {
-            if (Auth::user()->user_type == 1) {
+            if (Auth::user()->user_type == 0) {
                 return redirect('admin/dashboard');
             } elseif (Auth::user()->user_type == 2) {
                 return redirect('student/dashboard');
@@ -25,7 +25,7 @@ class AuthController extends Controller
     {
         $remember = ! empty($request->remember) ? true : false;
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember)) {
-            if (Auth::user()->user_type == 1) {
+            if (Auth::user()->user_type == 0) {
                 return redirect('admin/dashboard');
             } elseif (Auth::user()->user_type == 2) {
                 return redirect('student/dashboard');
@@ -38,7 +38,7 @@ class AuthController extends Controller
     public function register()
     {
         if (! empty(Auth::check())) {
-            if (Auth::user()->user_type == 1) {
+            if (Auth::user()->user_type == 0) {
                 return redirect('admin/dashboard');
             } elseif (Auth::user()->user_type == 2) {
                 return redirect('student/dashboard');

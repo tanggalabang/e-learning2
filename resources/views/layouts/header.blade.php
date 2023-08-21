@@ -162,7 +162,7 @@
     </a>
   </div>
 
-  @if(Auth::user()->user_type == 1)
+  @if(Auth::user()->user_type == 0)
   <ul class="sidebar-menu">
     <li class="dropdown active">
       <a href="{{url('admin/dashboard')}}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>

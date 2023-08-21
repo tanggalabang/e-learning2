@@ -10,7 +10,7 @@ class DashboardController extends Controller
     public function dashboard()
     {
       $data['header_title'] = 'Dashboard';
-      if(Auth::user() -> user_type == 1) {
+      if(Auth::user() -> user_type == 0) {
         return view('admin.dashboard', $data);
       }
       else if(Auth::user() -> user_type == 2) {

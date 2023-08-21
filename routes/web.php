@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\GuruController;
 use App\Http\Controllers\RelasiEditController;
 use App\Http\Livewire\StudentsComponent;
 
@@ -37,13 +38,18 @@ Route::group(['middleware' => 'admin'], function () {
   Route::put('/admin/siswa/{id}', [SiswaController::class, 'update']);
   Route::delete('/admin/siswa/{id}', [SiswaController::class, 'delete']);
 
+  Route::get('/admin/guru', [GuruController::class, 'list']);
+  Route::post('/admin/guru', [GuruController::class, 'insert']);
+  Route::put('/admin/guru/{id}', [GuruController::class, 'update']);
+  Route::delete('/admin/guru/{id}', [GuruController::class, 'delete']);
+
 
   // Route::get('/admin/siswa', function () {
   //   return view('admin.siswa.siswa');
   // });
-  Route::get('/admin/guru', function () {
-    return view('admin.siswa.guru');
-  });
+  // Route::get('/admin/guru', function () {
+  //   return view('admin.siswa.guru');
+  // });
   Route::get('/admin/kelas', function () {
     return view('admin.siswa.kelas');
   });
