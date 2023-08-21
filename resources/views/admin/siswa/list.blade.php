@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('main')
     <div>
         <div class="main-content">
@@ -9,7 +8,6 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-
 
                                 <div class="card-header">
                                     <h4>Siswa</h4>
@@ -23,7 +21,6 @@
                                             data-target="#addStudentModal">
                                             Tambah
                                         </button>
-
                                         <button type="button" class="btn btn-icon icon-left btn-success"
                                             data-toggle="modal" data-target=".bd-example-modal-sm">
                                             Import Excel
@@ -60,21 +57,28 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if ($siswas->count() > 0)
-                                                @foreach ($siswas as $siswa)
+                                            @if ($getRecord->count() > 0)
+                                                @foreach ($getRecord as $value)
                                                     <tr>
-                                                        <td>{{ $siswa->nis }}</td>
-                                                        <td>{{ $siswa->name }}</td>
-                                                        <td>{{ $siswa->gender }}</td>
-                                                        <td>{{ $siswa->email }}</td>
-                                                        <td>{{ $siswa->kelas }}</td>
+                                                        <td>{{ $value->nis }}</td>
+                                                        <td>{{ $value->name }}</td>
+                                                        <td>{{ $value->gender }}</td>
+                                                        <td>{{ $value->email }}</td>
+                                                        <td>{{ $value->kelas }}</td>
                                                         <td style="text-align: center;">
-                                                            {{-- <button class="btn btn-sm btn-secondary"
-                                                                wire:click="viewStudentDetails({{ $siswa->id }})">Lihat</button>
-                                                            <button class="btn btn-sm btn-primary"
-                                                                wire:click="editStudents({{ $siswa->id }})">Edit</button>
-                                                            <button class="btn btn-sm btn-danger"
-                                                                wire:click="deleteConfirmation({{ $siswa->id }})">Hapus</button> --}}
+
+                                                            <button class="btn btn-sm btn-secondary" data-toggle="modal"
+                                                                data-target="#viewStudentModal{{ $value->id }}">Lihat</button>
+                                                            <button class="btn btn-sm btn-primary" data-toggle="modal"
+                                                                data-target="#editStudentModal{{ $value->id }}">
+                                                                Edit
+                                                            </button>
+                                                            <form action="{{ url('admin/siswa', $value->id) }}" method="post" style="display: inline">
+                                                                @csrf
+                                                                @method('delete')
+                                                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                            </form>
+                                                            
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -89,7 +93,7 @@
                                     </table>
 
                                     <div style="float:right;">
-                                        {{-- {{ $siswas->links() }} --}}
+                                        {{-- {{ $getRecord->links() }} --}}
                                     </div>
 
                                 </div>
@@ -100,6 +104,7 @@
                 </div>
             </section>
         </div>
+
         <!-- Modal -->
         <!-- Excel Modal -->
         <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
@@ -143,8 +148,8 @@
         </div>
         <!-- End Excel Modal -->
         <!-- Add Modal -->
-        <div wire:ignore.self class="modal fade bd-example-modal-lg" id="addStudentModal" tabindex="-1"
-            data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal fade bd-example-modal-lg" id="addStudentModal" tabindex="-1" data-backdrop="static"
+            data-keyboard="false" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -178,30 +183,34 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div style="margin-bottom: 0 !important" class="form-group" >
+                                            <div style="margin-bottom: 0 !important" class="form-group">
                                                 <input type="text" class="form-control" name="nama[]">
                                             </div>
                                         </td>
                                         <td>
-                                            <div style="margin-bottom: 0 !important" class="form-group" >
+                                            <div style="margin-bottom: 0 !important" class="form-group">
                                                 <select class="form-control" name="gender[]">
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
-                                                    <option>Option 3</option>
+                                                    <option value="">Pilih</option>
+                                                    <option {{ old('gender') == 'Laki-laki' ? 'selected' : '' }}>
+                                                        Laki-laki</option>
+                                                    <option {{ old('gender') == 'Perempuan' ? 'selected' : '' }}>
+                                                        Perempuan</option>
                                                 </select>
                                             </div>
                                         </td>
                                         <td>
-                                            <div style="margin-bottom: 0 !important" class="form-group" >
+                                            <div style="margin-bottom: 0 !important" class="form-group">
                                                 <input type="text" class="form-control" name="email[]">
                                             </div>
                                         </td>
                                         <td>
-                                            <div style="margin-bottom: 0 !important" class="form-group" >
+                                            <div style="margin-bottom: 0 !important" class="form-group">
                                                 <select class="form-control" name="kelas[]">
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
-                                                    <option>Option 3</option>
+                                                    <option value="">Pilih</option>
+                                                    <option {{ old('kelas') == 'XI RPL A' ? 'selected' : '' }}>X RPL A
+                                                    </option>
+                                                    <option {{ old('kelas') == 'XI RPL A' ? 'selected' : '' }}>X RPL B
+                                                    </option>
                                                 </select>
                                             </div>
                                         </td>
@@ -294,139 +303,141 @@
             </div>
         </div>
         <!-- End Add Modal -->
-        {{-- <div wire:ignore.self class="modal fade" id="editStudentModal" tabindex="-1" data-backdrop="static"
-            data-keyboard="false" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit Siswa</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                            wire:click="close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
+        <!-- Edit Modal -->
+        @foreach ($getRecord as $value)
+            <div class="modal fade" id="editStudentModal{{ $value->id }}" tabindex="-1" data-backdrop="static"
+                data-keyboard="false" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Siswa</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                wire:click="close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
 
-
-
-
-                        <form wire:submit.prevent="editStudentData">
-
-                            <div class="form-group row">
-                                <label for="nis" class="col-3">NIS</label>
-                                <div class="col-9">
-                                    <input type="number" id="nis" class="form-control" wire:model="nis">
-                                    @error('nis')
-                                        <span class="text-danger" style="font-size: 11.5px;">{{ $message }}</span>
-                                    @enderror
+                            <form action="{{ url('admin/siswa', $value->id) }}" method="post"
+                                enctype="multipart/form-data">
+                                {{ method_field('put') }}
+                                {{ csrf_field() }}
+                                <div class="form-group row">
+                                    <label for="nis" class="col-3">NIS</label>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control" required
+                                            value="{{ old('nis', $value->nis) }}" name="nis" placeholder="Nis">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group row">
-                                <label for="nama" class="col-3">NAMA</label>
-                                <div class="col-9">
-                                    <input type="text" id="nama" class="form-control" wire:model="nama">
-                                    @error('nama')
-                                        <span class="text-danger" style="font-size: 11.5px;">{{ $message }}</span>
-                                    @enderror
+                                <div class="form-group row">
+                                    <label for="nis" class="col-3">NIS</label>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control" required
+                                            value="{{ old('nis', $value->name) }}" name="nama" placeholder="Nama">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group row">
-                                <label for="gender" class="col-3">GENDER</label>
-                                <div class="col-9">
-                                    <select class="form-control" id="gender" wire:model="gender">
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                    @error('gender')
-                                        <span class="text-danger" style="font-size: 11.5px;">{{ $message }}</span>
-                                    @enderror
+                                <div class="form-group row">
+                                    <label for="gender" class="col-3">GENDER</label>
+                                    <div class="col-9">
+                                        <select class="form-control" id="gender" wire:model="gender">
+                                            <option selected>Choose...</option>
+                                            <option {{ old('gender', $value->gender) == 'Laki-laki' ? 'selected' : '' }}
+                                                value="Laki-laki">Laki-laki</option>
+                                            <option {{ old('gender', $value->gender) == 'Perempuan' ? 'selected' : '' }}
+                                                value="Perempuan">Perempuan</option>
+                                        </select>
+                                        @error('gender')
+                                            <span class="text-danger" style="font-size: 11.5px;">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group row">
-                                <label for="email" class="col-3">EMAIL</label>
-                                <div class="col-9">
-                                    <input type="email" id="email" class="form-control" wire:model="email">
-                                    @error('email')
-                                        <span class="text-danger" style="font-size: 11.5px;">{{ $message }}</span>
-                                    @enderror
+                                <div class="form-group row">
+                                    <label for="nis" class="col-3">NIS</label>
+                                    <div class="col-9">
+                                        <input type="email" class="form-control" required
+                                            value="{{ old('email', $value->email) }}" name="email"
+                                            placeholder="Email">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group row">
-                                <label for="kelas" class="col-3">KELAS</label>
-                                <div class="col-9">
-                                    <select class="form-control" id="kelas" wire:model="kelas">
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                    @error('kelas')
-                                        <span class="text-danger" style="font-size: 11.5px;">{{ $message }}</span>
-                                    @enderror
+                                <div class="form-group row">
+                                    <label for="gender" class="col-3">GENDER</label>
+                                    <div class="col-9">
+                                        <select class="form-control" id="gender" wire:model="gender">
+                                            <option value="" selected>Choose...</option>
+                                            <option {{ old('kelas', $value->kelas) == 'X RPL A' ? 'selected' : '' }}
+                                                value="X RPL A">X RPL A</option>
+                                            <option {{ old('kelas', $value->kelas) == 'X RPL B' ? 'selected' : '' }}
+                                                value="X RPL B">X RPL B</option>
+                                        </select>
+                                        @error('gender')
+                                            <span class="text-danger" style="font-size: 11.5px;">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group row">
-                                <label for="" class="col-3"></label>
-                                <div class="col-9">
-                                    <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                                <div class="form-group row">
+                                    <label for="" class="col-3"></label>
+                                    <div class="col-9">
+                                        <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div wire:ignore.self class="modal fade" id="viewStudentModal" tabindex="-1" data-backdrop="static"
-            data-keyboard="false" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Informasi Siswa</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                            wire:click="closeViewStudentModal">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <th>NIS: </th>
-                                    <td>{{ $view_student_nis }}</td>
-                                </tr>
-                                <tr>
-                                    <th>NAMA: </th>
-                                    <td>{{ $view_student_name }}</td>
-                                </tr>
-                                <tr>
-                                    <th>GENDER: </th>
-                                    <td>{{ $view_student_gender }}</td>
-                                </tr>
-                                <tr>
-                                    <th>EMAIL: </th>
-                                    <td>{{ $view_student_email }}</td>
-                                </tr>
-                                <tr>
-                                    <th>KELAS: </th>
-                                    <td>{{ $view_student_kelas }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div> --}}
+        @endforeach
+        <!-- End Edit Modal -->
+        <!-- Lihat Modal -->
+        @foreach ($getRecord as $value)
+            <div class="modal fade" id="viewStudentModal{{ $value->id }}" tabindex="-1" data-backdrop="static"
+                data-keyboard="false" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Informasi Siswa</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                wire:click="closeViewStudentModal">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th>NIS: </th>
+                                        <td>{{$value->nis}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>NAMA: </th>
+                                        <td>{{$value->name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>GENDER: </th>
+                                        <td>{{$value->gender}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>EMAIL: </th>
+                                        <td>{{$value->email}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>KELAS: </th>
+                                        <td>{{$value->kelas}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+        <!-- End Lihat Modal -->
     </div>
-
 @endsection
 
 @push('scripts')
@@ -434,18 +445,18 @@
         $('.modal-body').on('click', '.addRow', function() {
             var tr = "<tr>" +
                 "<td>" +
-                "<div style='margin-bottom: 0 !important'  class='form-group' wire:model='nis[]'>" +
-                "<input type='text' class='form-control'>" +
+                "<div style='margin-bottom: 0 !important'  class='form-group'>" +
+                "<input type='text' class='form-control' name='nis[]'>" +
                 "</div>" +
                 "</td>" +
                 "<td>" +
-                "<di style='margin-bottom: 0 !important'  style='margin-bottom: 0 !important'  class='form-group' wire:model='nama[]'>" +
-                "<input type='text' class='form-control'>" +
+                "<di style='margin-bottom: 0 !important'  style='margin-bottom: 0 !important'  class='form-group'>" +
+                "<input type='text' class='form-control' name='nama[]'>" +
                 "</div>" +
                 "</td>" +
                 "<td>" +
-                "<div style='margin-bottom: 0 !important'  class='form-group' wire:model='gender[]'>" +
-                "<select class='form-control'>" +
+                "<div style='margin-bottom: 0 !important'  class='form-group'>" +
+                "<select class='form-control' name='gender[]'>" +
                 "<option>Option 1</option>" +
                 "<option>Option 2</option>" +
                 "<option>Option 3</option>" +
@@ -453,13 +464,13 @@
                 "</div>" +
                 "</td>" +
                 "<td>" +
-                "<div style='margin-bottom: 0 !important'  class='form-group' wire:model='email[]'>" +
-                "<input type='text' class='form-control'>" +
+                "<div style='margin-bottom: 0 !important'  class='form-group'>" +
+                "<input type='text' class='form-control' name='email[]'>" +
                 "</div>" +
                 "</td>" +
                 "<td>" +
-                "<div style='margin-bottom: 0 !important' class='form-group' wire:model='kelas[]'>" +
-                "<select class='form-control'>" +
+                "<div style='margin-bottom: 0 !important' class='form-group'>" +
+                "<select class='form-control' name='kelas[]'>" +
                 "<option>Option 1</option>" +
                 "<option>Option 2</option>" +
                 "<option>Option 3</option>" +

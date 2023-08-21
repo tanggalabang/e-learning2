@@ -30,13 +30,16 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'admin'], function () {
   Route::get('/admin/dashboard', [DashboardController::class, 'dashboard']);
-  // Route::get('/admin/siswa', [SiswaController::class, 'list']);
-  // Route::post('/admin/siswa', [SiswaController::class, 'create'])->name('siswa-create');
+
+  Route::get('/admin/siswa', [SiswaController::class, 'list']);
+  Route::post('/admin/siswa', [SiswaController::class, 'insert']);
+  Route::put('/admin/siswa/{id}', [SiswaController::class, 'update']);
+  Route::delete('/admin/siswa/{id}', [SiswaController::class, 'delete']);
 
 
-  Route::get('/admin/siswa', function () {
-    return view('admin.siswa.siswa');
-  });
+  // Route::get('/admin/siswa', function () {
+  //   return view('admin.siswa.siswa');
+  // });
   Route::get('/admin/guru', function () {
     return view('admin.siswa.guru');
   });
